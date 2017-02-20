@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="checkDLL" />
+		<Option pch_mode="2" />
+		<Option compiler="windows_sdk_x86" />
+		<Build>
+			<Target title="WIN_vc_x86">
+				<Option output="WIN_vc_x86/checkDLL" prefix_auto="1" extension_auto="1" />
+				<Option object_output="./obj/WIN_vc_x86/" />
+				<Option type="1" />
+				<Option compiler="windows_sdk_x86" />
+				<Compiler>
+					<Add option="/MT" />
+					<Add option="/O1" />
+					<Add option="/W4" />
+					<Add option="/EHsc" />
+					<Add option="/DNDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add library="Shell32" />
+				</Linker>
+			</Target>
+			<Target title="WIN_vc_AMD64">
+				<Option output="WIN_vc_AMD64/checkDLL" prefix_auto="1" extension_auto="1" />
+				<Option object_output="./obj/WIN_vc_AMD64/" />
+				<Option type="1" />
+				<Option compiler="windows_sdk_x86_64" />
+				<Compiler>
+					<Add option="/MT" />
+					<Add option="/O1" />
+					<Add option="/W4" />
+					<Add option="/EHsc" />
+					<Add option="/DNDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add library="Shell32" />
+				</Linker>
+			</Target>
+			<Target title="WIN_gcc_x86">
+				<Option output="WIN_gcc_x86/checkDLL" prefix_auto="1" extension_auto="1" />
+				<Option object_output="./obj/WIN_gcc_x86/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Os" />
+					<Add option="-msse" />
+					<Add option="-mmmx" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Unit filename="main.cpp" />
+		<Unit filename="stConsole.cpp" />
+		<Unit filename="stConsole.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
