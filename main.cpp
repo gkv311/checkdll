@@ -180,30 +180,34 @@ int main (int , char** )
 
   wchar_t aCurrentFolder[4096];
   GetCurrentDirectoryW (4096, aCurrentFolder); // take current directory
-  std::wstring aSearchMask (aCurrentFolder);
+  std::wstring aSearchMaskBase (aCurrentFolder);
   if (aNbArgs >= 2)
   {
-    aSearchMask = anArgVec[1];
+    aSearchMaskBase = anArgVec[1];
   }
   LocalFree (anArgVec);
 
-  WIN32_FIND_DATAW aFindFile;
-  aSearchMask += L"\\*.dll";
-
-  HANDLE aFindIter = FindFirstFileW (aSearchMask.c_str(), &aFindFile);
-  for (BOOL hasFile = aFindIter != INVALID_HANDLE_VALUE; hasFile == TRUE;
-       hasFile = FindNextFileW (aFindIter, &aFindFile))
+  const wchar_t* THE_MASKS[2] = { L"\\*.dll", L"\\*.pyd" };
+  for (int aMaskIter = 0; aMaskIter < sizeof(THE_MASKS) / sizeof(wchar_t*); ++aMaskIter)
   {
-    char aShortName[4096];
-    wcstombs (aShortName, aFindFile.cAlternateFileName, 4096);
-    if (*aShortName == '\0')
+    WIN32_FIND_DATAW aFindFile;
+    std::wstring aSearchMask = aSearchMaskBase + THE_MASKS[aMaskIter];
+
+    HANDLE aFindIter = FindFirstFileW (aSearchMask.c_str(), &aFindFile);
+    for (BOOL hasFile = aFindIter != INVALID_HANDLE_VALUE; hasFile == TRUE;
+         hasFile = FindNextFileW (aFindIter, &aFindFile))
     {
-      wcstombs (aShortName, aFindFile.cFileName, 4096);
+      char aShortName[4096];
+      wcstombs (aShortName, aFindFile.cAlternateFileName, 4096);
+      if (*aShortName == '\0')
+      {
+        wcstombs (aShortName, aFindFile.cFileName, 4096);
+      }
+      std::set<std::string> aShownLibs;
+      probeModule (aFindFile.cFileName, aShortName, L"", 0, aShownLibs);
     }
-    std::set<std::string> aShownLibs;
-    probeModule (aFindFile.cFileName, aShortName, L"", 0, aShownLibs);
+    FindClose (aFindIter);
   }
-  FindClose (aFindIter);
 
   system ("pause");
   return 0;
