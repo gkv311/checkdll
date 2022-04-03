@@ -1,6 +1,9 @@
 CheckDLL - command line tool for checking DLL and EXE dependencies
 =================================
 
+[![Downloads](https://img.shields.io/github/downloads/gkv311/checkdll/total.svg)](https://github.com/gkv311/checkdll/releases)
+[![License: GPL v3](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/gkv311/checkdll/blob/master/LICENSE.txt)
+
 CheckDLL is a compact utility for checking missing DLLs within installed application.
 This tool is NOT a replacements for more advanced tools like Dependency Walker or others.
 It is designed for *FAST* check of missing dependencies - by trying to actually load modules in usual way.
